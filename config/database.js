@@ -6,13 +6,12 @@ const sequelize = new Sequelize('compasscar', 'root', '', {
   logging: false 
 });
 
-
 (async () => {
   try {
     await sequelize.authenticate();
-    console.log('Conexão estabelecida com sucesso com o Sequelize');
+    console.log('Connection established successfully with Sequelize');
   } catch (err) {
-    console.error('Não foi possível conectar:', err);
+    console.error('Unable to connect to the database:', err);
   }
 })();
 

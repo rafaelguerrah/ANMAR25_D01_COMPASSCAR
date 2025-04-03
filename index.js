@@ -10,12 +10,12 @@ app.use(express.json());
 app.use(carRoutes); 
 
 app.get('/', (req, res) => {
-    res.send("testando...");
+    res.send("API is running...");
 });
 
 connection
     .sync()
     .then(() => {
-        app.listen(port, () => console.log(`Servidor rodando na porta ${port}`));
+        app.listen(port, () => console.log(`Database connection failed: ${port}`));
     })
     .catch((err) => console.error(err));
