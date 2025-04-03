@@ -1,36 +1,44 @@
-const express = require('express');
-const app = express();
-const cors = require('cors');
-const carrosRoutes = require('./routs/carros'); 
-
+const express =  require('express');
+const app =  express();
 const port = 3000;
+const Car = require('./models/Car');
 
-const connection = require('./config/database');
+const conection = require('./config/database');
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors()); 
+require('dotenv').config();
 
-// Rota principal
-app.get('/', (req, res) => {
-    res.status(200).json({
-        message: "API em funcionamento",
-        status: "OK",
-        database: connection.authenticated ? "Conectado" : "Desconectado"
-    });
+app.use(express.json())
+
+app.get('/', (req, res) =>{
+    res.send("testando...")
 });
 
-// Usando as rotas de carros
-app.use('/carros', carrosRoutes);
+app.post('/api/v1/car', async (req, res) => {
+     const {brand, model, year, plate } = req.body
 
-// rotas nao encontrada
-app.use((req, res) => {
-    res.status(404).json({ message: "Rota não encontrada" });
+    try {
+        const car = await Car.create({ brand, model, year, plate });
+        res.status(201).json({ message: "Carro cadastrado com sucesso!", car });
+    } catch (err) {
+        console.error("Erro ao cadastrar:", err);
+        res.status(500).json({ error: "Erro ao cadastrar carro." });
+    }
 });
 
-app.listen(port, () => {
-    console.log(`Servidor rodando na porta: ${port}`);
+app.get('/api/v1/car', async (req, res) => {
+    try {
+       
+        const cars = await Car.findAll();
+        res.status(200).json(cars); 
+    } catch (err) {
+        console.error("Erro ao buscar dados:", err);
+        res.status(500).json({ error: "Erro ao buscar carros." });
+    }
 });
-
-
+conection
+    .sync()
+    .then(() =>{
+        app.listen(3000)
+    })
+    .catch((err) =>console.log(err))
 
