@@ -16,6 +16,11 @@ router.post('/api/v1/car', async (req, res) => {
     if(year && (year < 2015 || year > 2025)){
         errors.push("year must be between 2015 and 2025");
     }
+
+    const existingCar = await Car.findOne({ where: { plate } });
+    if (existingCar) {
+    return res.status(400).json({ error: "A placa já está registrada." });
+}
     
  
     if(errors.length > 0){
