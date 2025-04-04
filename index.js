@@ -16,6 +16,6 @@ app.get('/', (req, res) => {
 connection
     .sync()
     .then(() => {
-        app.listen(port, () => console.log(`Database connection failed: ${port}`));
+        app.listen(port, () => console.log(`Server is running on port ${port}`));
     })
     .catch((err) => console.error(err));
