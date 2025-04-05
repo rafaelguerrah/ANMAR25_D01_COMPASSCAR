@@ -5,7 +5,6 @@ API REST para gerenciamento de carros, construída com **Node.js**, **Express**,
 ## 📦 Funcionalidades
 
 - ✅ Criar, listar, atualizar e excluir carros
-- 🔎 Filtros de busca: ano, marca, final da placa
 - 📄 Paginação de resultados
 - ✅ Validações e mensagens de erro
 - 📂 Estrutura pronta para expansão com itens de carro (carItems)
@@ -67,15 +66,20 @@ GET /api/v1/cars
 ````
 Query Params:
 
-- year: retorna carros com ano >=
+- id: retorna o id de criação do carro no banco de dados
 
-- final_plate: filtra pelo final da placa
+- brand: marca do carro
 
-- brand: busca parcial da marca
+- model: modelo do carro
 
-- page: número da página
+- year: ano de fabricação
 
-- limit: limite por página (máx. 10)
+- plate: placa do carro
+
+Acrecentar itens ao veiculo
+````http
+PUT /api/v1/cars/:id/items
+````
 
   Atualizar carro
 ````http
@@ -92,8 +96,6 @@ DELETE /api/v1/cars/:id
 year: entre 2015 e 2025
 
 plate: formato ABC-1C34
-
-Se brand for enviada, model também é obrigatório
 
 ## 🧪 Testes (via Insomnia ou Postman)
 Você pode testar os endpoints com ferramentas como:
