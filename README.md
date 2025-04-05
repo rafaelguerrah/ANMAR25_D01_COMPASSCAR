@@ -120,7 +120,7 @@ Você pode testar os endpoints com ferramentas como:
 
 ---
 
-🧠 Autor
+🧠 
 Feito por Rafael Guerra Santos
 
 
