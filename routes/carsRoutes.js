@@ -56,16 +56,6 @@ router.post('/api/v1/cars', async (req, res) => {
 
 });
 
-router.get('/api/v1/cars', async (req, res) => {
-    try {
-        const cars = await Car.findAll();
-        res.status(200).json(cars);
-    } catch (err) {
-        console.error("Error fetching data:", err);
-        res.status(500).json({ error: "Error while fetching cars" });
-    }
-});
-
 router.put('/api/v1/cars/:id/items', async (req, res) => {
     const { id } = req.params;
     const { items } = req.body;
@@ -266,7 +256,10 @@ router.patch('/api/v1/cars/:id', async (req, res) => {
 router.delete('/api/v1/cars/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const car = await Car.findByPk(id);
+
+        const car = await Car.findByPk(id, {
+            include: ['carItems'], 
+        });
 
         if (!car) {
             return res.status(404).json({
@@ -274,9 +267,16 @@ router.delete('/api/v1/cars/:id', async (req, res) => {
             });
         }
 
+        if (car.carItems && car.carItems.length > 0) {
+            for (const item of car.carItems) {
+                await item.destroy();
+            }
+        }
+
         await car.destroy();
 
         return res.status(204).send();
+
     } catch (error) {
         console.error('Error while deleting car.', error);
         return res.status(500).json({
@@ -284,9 +284,5 @@ router.delete('/api/v1/cars/:id', async (req, res) => {
         });
     }
 });
-
-
-
-
 
 module.exports = router;
