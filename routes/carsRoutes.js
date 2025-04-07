@@ -47,7 +47,7 @@ router.post('/api/v1/cars', async (req, res) => {
             model: car.model,
             year: car.year,
             plate: car.plate,
-            created_at: car.createdAt
+            created_at: car.created_at
         });
     } catch (err) {
         console.error("Error creating car:", err);
@@ -103,7 +103,7 @@ router.get('/api/v1/cars/:id', async (req, res) => {
         const car = await Car.findByPk(id, {
             include: {
                 model: CarItem,
-                as: 'items',
+                as: 'carItems',
                 attributes: ['name']
             }
         });
@@ -114,7 +114,7 @@ router.get('/api/v1/cars/:id', async (req, res) => {
             });
         }
 
-        const itemNames = car.items.map(item => item.name);
+        const itemNames = car.carItems.map(item => item.name);
 
         return res.status(200).json({
             id: car.id,
@@ -122,7 +122,7 @@ router.get('/api/v1/cars/:id', async (req, res) => {
             model: car.model,
             year: car.year,
             plate: car.plate,
-            created_at: car.createdAt,
+            created_at: car.created_at,
             items: itemNames
         });
     } catch (error) {

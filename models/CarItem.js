@@ -20,12 +20,15 @@ module.exports = (sequelize, DataTypes) => {
       },
     }, {
       tableName: 'cars_items',
-      timestamps: false,
+      timestamps: true,
+      createdAt: 'created_at',
+      updatedAt: 'updated_at'
     });
   
     CarItem.associate = (models) => {
       CarItem.belongsTo(models.Car, {
         foreignKey: 'car_id',
+      as: 'car',
       });
     };
   
