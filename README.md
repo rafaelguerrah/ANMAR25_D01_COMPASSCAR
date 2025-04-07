@@ -284,13 +284,6 @@ Response:
 ---
 
  >> 🚗 Developed by Rafael Guerra Santos <<
-### How to Use
-
-- Save the content above in a file named README.md in your project root
-- After saving the file, commit it to your GitHub repository
-- When someone accesses your GitHub repository, this README will be displayed as the main documentation
-
-If you need any adjustments or additional information, just let me know! 
 
 
   
