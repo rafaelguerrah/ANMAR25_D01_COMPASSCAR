@@ -1,41 +1,41 @@
 # CompassCar API 🚘
 
-API REST para gerenciamento de carros e seus itens, construída com **Node.js**, **Express**, **Sequelize** e **MySQL**.
+REST API for car and item management, built with **Node.js**, **Express**, **Sequelize** and **MySQL**.
 
 ---
 
-## 📦 Funcionalidades
+## 📦 Features
 
-- ✅ Criar, listar, atualizar e excluir carros
-- ✅ Adicionar itens aos carros
-- 📄 Paginação de resultados
-- ✅ Validações e mensagens de erro
-- 🛠️ Estrutura pronta para expansão
+- ✅ Create, list, update and delete cars
+- ✅ Add items to cars
+- 📄 Results pagination
+- ✅ Validations and error messages
+- 🛠️ Ready for expansion
 
 ---
 
-## 🛠 Tecnologias usadas
+## 🛠 Technologies Used
 
 - **Node.js**
 - **Express**
 - **MySQL**
 - **Sequelize (ORM)**
-- **Nodemon** para desenvolvimento
+- **Nodemon** for development
 
 ---
 
-## 🚀 Como rodar o projeto
+## 🚀 How to Run the Project
 
-1. **Clone o repositório:**
+1. **Clone the repository:**
    ```bash
-   git clone https://github.com/seu-repositorio/compasscar.git
+   gh repo clone rafaelguerrah/ANMAR25_D01_COMPASSCAR
    cd compasscar
-   ```
-2. **Instale as dependências:**
+   
+2. **Install dependencies::**
   ```bash
   npm install
  ```
-3. **Configure o banco de dados: No arquivo , defina as credenciais do MySQL:**
+3. **MySQL credentials with Sequelize::**
    ```javascript
    const { Sequelize } = require('sequelize');
 
@@ -55,19 +55,42 @@ API REST para gerenciamento de carros e seus itens, construída com **Node.js**,
     }
     })();
     ```
-  4. **Inicie o servidor:**
+  3.1 **Create database tables:**
+  ```sql
+   CREATE DATABASE compasscar;
+
+USE compasscar;
+
+CREATE TABLE cars (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  brand VARCHAR(255) NOT NULL,
+  model VARCHAR(255) NOT NULL,
+  plate VARCHAR(255) NOT NULL UNIQUE,
+  year INT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE cars_items (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  car_id INT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (car_id) REFERENCES cars(id)
+);
+  ```
+  4. **Start the server:**
   ```bash
   npm start
   ```
-  5. A API estará disponível em: `http://localhost:3000/`
+  5. API will be available at: `http://localhost:3000/`
 
   ---
 ## 📚 Endpoints
-## Criar um carro
+## Create a Car
 
 **POST** `http://localhost:3000/api/v1/cars`
 
-**Requerimento:**
+**Request:**
 ```json
 {
   "brand": "Ford",
@@ -76,7 +99,7 @@ API REST para gerenciamento de carros e seus itens, construída com **Node.js**,
   "plate": "ABC-1C34"
 }
 ```
-**Resposta:**
+**Response:**
 - 201 Created:
 ```json
 {
@@ -88,24 +111,24 @@ API REST para gerenciamento de carros e seus itens, construída com **Node.js**,
   "created_at": "2025-04-06T14:01:00.000Z"
 }
 ```
-## Atualizar itens de um carro
+## Update Car Items
 
 **PUT** `http://localhost:3000/api/v1/cars/:id/items`
 
-**Requerimento:**
+**Request:**
 ``` json
 {
   "items": ["Ar Condicionado", "Bancos de Couro"]
 }
 ```
-**Resposta:**
-- 204 Sem Conteúdo: Atualização bem-sucedida.
+**Response:**
+- 204  No Content: 
 
-## Buscar um carro por ID
+## Get Car by ID
 
 **GET** `http://localhost:3000/api/v1/cars/:id`
 
-**Resposta:**
+**Response:**
 ``` json
 {
   "id": 1,
@@ -118,19 +141,19 @@ API REST para gerenciamento de carros e seus itens, construída com **Node.js**,
 }
 ```
 
-## Listar carros com filtros e paginação
+## List Cars with Filters and Pagination
 **GET** `http://localhost:3000/api/v1/cars`
 
 **Query Params:**
 
-- `id`: Pelo id do carro cadastrado nao banco de dados
-- `year`: Ano do carro (filtra anos maiores ou iguais ao valor informado).
-- `plate`: Parte final da placa (filtra carros que contenham os caracteres).
-- `brand`: Marca do carro.
+- `id`:  Filter by car ID
+- `year`: Car year (filters years greater or equal)
+- `plate`: Plate ending (filters plates containing characters)
+- `brand`: Car brand
 
-Exemplo: `http://localhost:3000/api/v1/cars?year=2018`
+Example: `http://localhost:3000/api/v1/cars?year=2018`
 
-Resposta:
+Response:
 - 200 ok
   
 ````json
@@ -159,11 +182,11 @@ Resposta:
     ]};
   ````
 
-## Atualizar informações de um carro
+## Update Car Information
 
  **PATH** `http://localhost:3000/api/v1/cars/:id`
 
-Requerimento:
+Request:
 ```json
 {
   "brand": "Chevrolet",
@@ -172,18 +195,18 @@ Requerimento:
   "plate": "XYZ-9G89"
 }
 ```
-Resposta:
-- 204 Sem conteudo: Atualização bem-sucedida
+Response:
+- 204 No Content
 
-## Excluir um carro
+## Delete a Car
 **DELETE** `http://localhost:3000/api/v1/cars/:id`
 
-Resposta:
-- 204 Sem conteudo: Exclusão bem-sucedida.
+Response:
+- 204 No Content:
 
 ---
 
-📁 Estrutura de Pastas
+📁 Folder Structure
 ```
 ├── config/
 │   └── database.js
@@ -197,24 +220,93 @@ Resposta:
 ├── package.json
 └── README.md
 ```
-## ⚠️ Validações
-- year: Deve estar entre 2015 e 2025.
-- plate: Formato exigido é: ABC-1C24.
-- items: Máximo de 5 por carro; não podem ser repetidos.
+---
+##⚠️ Validations
+- year: Must be between 2015 and 2025
+- plate: Required format: ABC-1C24
+- items: Maximum 5 per car; cannot be repeated
 
-## 🧪 Teste
-**Use ferramentas como Postman ou Insomnia para testar os endpoints. Certifique-se de configurar corretamente os headers e bodies das requisições**
+## 🔴Error Reference
+
+⚠️ 400 Bad Request (Validation Errors)
+```json
+{
+  "errors": [
+    "🔹 brand is required",
+    "🔹 model is required",
+    "🔹 year is required",
+    "🔹 plate is required",
+    "🔹 year must be between {currentYear-9} and {currentYear+1}",
+    "🔹 plate must be in the correct format ABC-1C34",
+    "🔹 items is required",
+    "🔹 items must be a maximum of 5",
+    "🔹 items cannot be repeated",
+    "🔹 model must also be informed"
+  ]
+}
+```
+🔍 404 Not Found
+```json
+{
+  "errors": [
+    "🚨 car not found"
+  ]
+}
+```
+⚔️ 409 Conflict
+```json
+{
+  "errors": [
+    "💥 car already registered"
+  ]
+}
+```
+🆘 500 Internal Server Error
+```json
+{
+  "errors": [
+    "❌ an internal server error occurred"
+  ]
+}
+```
+✅ Successful Responses
+- 201 Created: 🟢 Car created successfully
+
+- 200 OK: 🟢 Request processed successfully
+
+- 204 No Content: 🟢 Operation successful (no response body)
 
 ---
 
-🧠 Feito por Rafael Guerra Santos
+## 🧪 Testing
+**Use tools like Postman or Insomnia to test the endpoints. Make sure to configure request headers and bodies correctly**
 
-### Como Usar
-1. Salve o conteúdo acima em um arquivo chamado `README.md` na raiz do seu projeto.
-2. Depois de salvar o arquivo, faça um commit no seu repositório GitHub.
-3. Quando alguém acessar seu repositório no GitHub, este README será exibido como documentação principal.
+---
 
-Se precisar de mais ajustes ou algo adicional, é só falar! 😊
+  ___________________________
+ /                           \
+|    MADE BY: RAFAEL GUERRA   |
+|           SANTOS            |
+ \___________________________/
+        |  🚗  🚘  🏎️  |
+        |________________|
+              ||
+            __||__
+           /______\
+          /        \
+         /          \
+        /____________\
+       |   COMPASSCAR  |
+       |_______________|
+
+### How to Use
+
+- Save the content above in a file named README.md in your project root
+- After saving the file, commit it to your GitHub repository
+- When someone accesses your GitHub repository, this README will be displayed as the main documentation
+
+If you need any adjustments or additional information, just let me know! 
+
 
   
 
