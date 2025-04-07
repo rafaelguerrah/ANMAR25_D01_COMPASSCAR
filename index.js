@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const connection = require('./config/database'); 
-const carRoutes = require('./routes/carsRoutes'); 
+const carRoutes = require('./routes/carsRoutes');
 
 require('dotenv').config();
 
