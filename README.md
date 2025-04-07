@@ -122,7 +122,7 @@ CREATE TABLE cars_items (
 }
 ```
 **Response:**
-- 204  No Content: 
+- 204  No Content
 
 ## Get Car by ID
 
@@ -202,7 +202,7 @@ Response:
 **DELETE** `http://localhost:3000/api/v1/cars/:id`
 
 Response:
-- 204 No Content:
+- 204 No Content
 
 ---
 
@@ -283,22 +283,7 @@ Response:
 
 ---
 
-  ___________________________
- /                           \
-|    MADE BY: RAFAEL GUERRA   |
-|           SANTOS            |
- \___________________________/
-        |  🚗  🚘  🏎️  |
-        |________________|
-              ||
-            __||__
-           /______\
-          /        \
-         /          \
-        /____________\
-       |   COMPASSCAR  |
-       |_______________|
-
+ >> 🚗 Developed by Rafael Guerra Santos <<
 ### How to Use
 
 - Save the content above in a file named README.md in your project root
