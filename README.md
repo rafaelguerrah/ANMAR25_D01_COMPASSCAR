@@ -118,7 +118,7 @@ CREATE TABLE cars_items (
 **Request:**
 ``` json
 {
-  "items": ["Ar Condicionado", "Bancos de Couro"]
+  "items": ["Air Conditioning", "Leather Seats"]
 }
 ```
 **Response:**
